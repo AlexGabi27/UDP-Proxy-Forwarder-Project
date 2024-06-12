@@ -366,30 +366,6 @@ int main(int argvn, char *argv[])
 
     while(1)
     {
-        if (ticket_mode == false && connects < 2)
-        {
-            int len = 0;
-            char steambuff[1024];
-
-            ifstream new_ticket("ticket.txt", ios::binary);
-            bzero(&steambuff, sizeof(steambuff));
-            new_ticket.read((char *)&steambuff, sizeof(steambuff));
-            new_ticket.close();
-
-            ifstream leng("len.txt");
-            leng >> len;
-            leng.close();
-
-            class CSteamID steam_user2;
-
-            cout << *reinterpret_cast<uint64_t*>((uintptr_t)steambuff + 12) << endl;
-
-            if (!(SteamGameServer()->SendUserConnectAndAuthenticate(client.sin_addr.s_addr, steambuff, len, &steam_user2)))
-            {
-                connects++;
-                cout << "Shit - no auth" << endl;
-            }
-        }
         if ((bufferlen = recvfrom(serversock, buffer, sizeof(buffer), 0, (struct sockaddr *)&client, &clientlen)))
         {
             clientsid = 0;
