@@ -401,33 +401,6 @@ int main(int argvn, char *argv[])
             if (CheckIfConnectPacket((char *)buffer))
             {
                 int n = bufferlen;
-                if (ticket_mode == true)
-                {
-                    int len = 0;
-                    char steambuff[1024];
-                    int x = 0;
-                    for (x; x < n; x++)
-                    {
-                        if (buffer[x] == '\x0a' && buffer[x - 1] == '\x22')
-                        {
-                            x++;
-                            break;
-                        }
-                    }
-
-                    len = n - x;
-                    memcpy(steambuff, &buffer[x], len);
-
-                    if (ticket_mode == true)
-                    {
-                        ofstream ticket("ticket.txt", ios::binary);
-                        ofstream leng("len.txt");
-                        ticket.write((char *)&steambuff, len);
-                        leng << len;
-                        ticket.close();
-                        leng.close();
-                    }
-                }
 
                 char name[64];
                 char *name_p;
